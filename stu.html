@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Registration Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            padding: 20px;
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        form {
+            background: white;
+            padding: 20px;
+            max-width: 400px;
+            margin: auto;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            margin-top: 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .error {
+            color: red;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Student Registration Form</h2>
+
+<form id="regForm">
+    <label>Full Name</label>
+    <input type="text" id="name" placeholder="Enter your full name">
+    <div class="error" id="nameError"></div>
+
+    <label>Email</label>
+    <input type="email" id="email" placeholder="Enter your email">
+    <div class="error" id="emailError"></div>
+
+    <label>Phone Number</label>
+    <input type="tel" id="phone" placeholder="Enter your phone number">
+    <div class="error" id="phoneError"></div>
+
+    <label>Gender</label>
+    <select id="gender">
+        <option value="">--Select--</option>
+        <option>Male</option>
+        <option>Female</option>
+        <option>Other</option>
+    </select>
+    <div class="error" id="genderError"></div>
+
+    <label>Date of Birth</label>
+    <input type="date" id="dob">
+    <div class="error" id="dobError"></div>
+
+    <label>Course</label>
+    <input type="text" id="course" placeholder="Enter course name">
+    <div class="error" id="courseError"></div>
+
+    <button type="submit">Register</button>
+</form>
+
+<script>
+document.getElementById("regForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    let valid = true;
+
+    // Get values
+    let name = document.getElementById("name").value.trim();
+    let email = document.getElementById("email").value.trim();
+    let phone = document.getElementById("phone").value.trim();
+    let gender = document.getElementById("gender").value;
+    let dob = document.getElementById("dob").value;
+    let course = document.getElementById("course").value.trim();
+
+    // Clear errors
+    document.querySelectorAll(".error").forEach(el => el.textContent = "");
+
+    // Name validation
+    if (name === "") {
+        document.getElementById("nameError").textContent = "Name is required";
+        valid = false;
+    }
+
+    // Email validation
+    let emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+    if (!emailPattern.test(email)) {
+        document.getElementById("emailError").textContent = "Enter a valid email";
+        valid = false;
+    }
+
+    // Phone validation
+    let phonePattern = /^[0-9]{10}$/;
+    if (!phonePattern.test(phone)) {
+        document.getElementById("phoneError").textContent = "Enter a 10-digit number";
+        valid = false;
+    }
+
+    // Gender validation
+    if (gender === "") {
+        document.getElementById("genderError").textContent = "Select gender";
+        valid = false;
+    }
+
+    // DOB validation
+    if (dob === "") {
+        document.getElementById("dobError").textContent = "Select date of birth";
+        valid = false;
+    }
+
+    // Course validation
+    if (course === "") {
+        document.getElementById("courseError").textContent = "Course is required";
+        valid = false;
+    }
+
+    if (valid) {
+        alert("Registration Successful!");
+        document.getElementById("regForm").reset();
+    }
+});
+</script>
+
+</body>
+</html>
