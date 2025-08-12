@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Registration Form</title>
+    <style>
+        /* CSS Variables for consistent theme */
+        :root {
+            --primary-color: #4CAF50;
+            --secondary-color: #45a049;
+            --bg-color: #f2f2f2;
+            --text-color: #333;
+            --error-color: red;
+            --font-main: Arial, sans-serif;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-color);
+            padding: 20px;
+        }
+
+        h2 {
+            text-align: center;
+            color: var(--text-color);
+            position: relative;
+        }
+
+        /* Decorative pseudo-element */
+        h2::after {
+            content: "";
+            display: block;
+            width: 50px;
+            height: 4px;
+            background: var(--primary-color);
+            margin: 8px auto 0;
+            border-radius: 2px;
+        }
+
+        form {
+            background: white;
+            padding: 20px;
+            max-width: 400px;
+            margin: auto;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+            display: flex;
+            flex-direction: column; /* Flexbox for responsive layout */
+        }
+
+        label {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        input, select {
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            transition: 0.3s ease; /* Smooth transition effect */
+        }
+
+        input:focus, select:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 5px var(--primary-color);
+        }
+
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 10px;
+            margin-top: 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+            animation: fadeIn 1s ease-in-out; /* CSS Animation */
+        }
+
+        button:hover {
+            background-color: var(--secondary-color);
+            transform: scale(1.05);
+        }
+
+        /* Animation keyframes */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .error {
+            color: var(--error-color);
+            font-size: 14px;
+        }
+
+        /* Responsive */
+        @media (max-width: 500px) {
+            form {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<h2>Student Registration Form</h2>
+
+<form id="regForm">
+    <label>Full Name</label>
+    <input type="text" id="name" placeholder="Enter your full name">
+    <div class="error" id="nameError"></div>
+
+    <label>Email</label>
+    <input type="email" id="email" placeholder="Enter your email">
+    <div class="error" id="emailError"></div>
+
+    <label>Phone Number</label>
+    <input type="tel" id="phone" placeholder="Enter your phone number">
+    <div class="error" id="phoneError"></div>
+
+    <label>Gender</label>
+    <select id="gender">
+        <option value="">--Select--</option>
+        <option>Male</option>
+        <option>Female</option>
+        <option>Other</option>
+    </select>
+    <div class="error" id="genderError"></div>
+
+    <label>Date of Birth</label>
+    <input type="date" id="dob">
+    <div class="error" id="dobError"></div>
+
+    <label>Course</label>
+    <input type="text" id="course" placeholder="Enter course name">
+    <div class="error" id="courseError"></div>
+
+    <button type="submit">Register</button>
+</form>
+
+<!-- Click Me Button -->
+<div style="text-align:center; margin-top:20px;">
+    <button id="clickMeBtn">Click Me</button>
+</div>
+
+<script>
+    // Welcome alert on page load
+    window.addEventListener("load", () => {
+        alert("Welcome to the Student Registration Page!");
+    });
+
+    // Function for validation
+    function validateForm() {
+        let valid = true;
+        const fields = [
+            { id: "name", message: "Name is required" },
+            { id: "email", pattern: /^[^ ]+@[^ ]+\.[a-z]{2,3}$/, message: "Enter a valid email" },
+            { id: "phone", pattern: /^[0-9]{10}$/, message: "Enter a 10-digit number" },
+            { id: "gender", message: "Select gender" },
+            { id: "dob", message: "Select date of birth" },
+            { id: "course", message: "Course is required" }
+        ];
+
+        document.querySelectorAll(".error").forEach(el => el.textContent = "");
+
+        fields.forEach(field => {
+            let value = document.getElementById(field.id).value.trim();
+            if (value === "" || (field.pattern && !field.pattern.test(value))) {
+                document.getElementById(field.id + "Error").textContent = field.message;
+                valid = false;
+            }
+        });
+
+        return valid;
+    }
+
+    // Form submission
+    document.getElementById("regForm").addEventListener("submit", function(e) {
+        e.preventDefault();
+        if (validateForm()) {
+            alert("Registration Successful!");
+            this.reset();
+        }
+    });
+
+    // "Click Me" button changes background color of form
+    document.getElementById("clickMeBtn").addEventListener("click", function() {
+        const form = document.getElementById("regForm");
+        const colors = ["#e3f2fd", "#fff3e0", "#fce4ec", "#f1f8e9"];
+        const randomColor = colors[Math.floor(Math.random() * colors.length)];
+        form.style.backgroundColor = randomColor;
+    });
+</script>
+
+</body>
+</html>
